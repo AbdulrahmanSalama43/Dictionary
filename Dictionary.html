@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Created by Abdulrahman Salama</title>
+    <style>
+       body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff6b6b, #556270);
+            background-size: 200% 200%;
+            animation: gradient 10s infinite alternate;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .container {
+            display: grid;
+            grid-template-rows: auto 1fr; /* First row for search bar, second row for dictionary content */
+            gap: 20px;
+            max-width: 800px; /* Increase max-width */
+            width: 100%;
+            padding: 20px; /* Increase padding */
+            background-color: rgba(255, 255, 255, 0.9); /* Add background color */
+            border-radius: 10px; /* Add border radius */
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Add box shadow */
+            overflow: hidden; /* Remove overflow hidden */
+        }
+
+        #dictionary {
+            text-align: center; /* Center align */
+            overflow-y: auto; /* Add overflow-y to enable scrolling */
+            max-height: 60vh; /* Add max-height to limit height and enable scrolling */
+            padding-top: 20px; /* Add padding to top */
+        }
+
+        #dictionary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #fff;
+            z-index: 1;
+            transform: skewY(4deg);
+        }
+
+        #dictionary:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #fff;
+            z-index: 1;
+            transform: skewY(-4deg);
+        }
+
+       h1 {
+    margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.9); /* White with 90% opacity */
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Example gradient colors */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+.container h1:last-child {
+    margin-bottom: 10px; /* Adjusted margin */
+}
+
+        .search-input {
+            width: calc(100% - 40px); /* Adjusted width */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 2;
+            position: relative;
+        }
+
+        .search-input:focus {
+            box-shadow: 0px 0px 10px rgba(105, 196, 255, 0.5);
+        }
+
+        #output {
+            margin-bottom: 20px;
+        }
+
+        #wordList {
+            text-align: left;
+            z-index: 2;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        thead,
+        tbody {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        tr {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-items: center;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Name: Mayar Mohamed</h1>
+     <h1>ID: 202101126 </h1>
+        <input type="text" class="search-input" id="searchInput" oninput="filterDictionary()" placeholder="Search in dictionary...">
+        <div id="dictionary">
+            
+            <div id="output"></div>
+           <table>
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Translation</th>
+                </tr>
+            </thead>
+            <tbody id="wordList">
+<tr><th colspan="2">Deporte (رياضة)</th></tr>
+<tr><td>ajedrez</td><td>شطرنج</td></tr>
+<tr><td>artes marciales</td><td>فنون الدفاع عن النفس</td></tr>
+<tr><td>atletismo</td><td>ألعاب القوى</td></tr>
+<tr><td>automovilismo</td><td>سباق السيارات</td></tr>
+<tr><td>bádminton</td><td>تنس الريشة</td></tr>
+<tr><td>baloncesto</td><td>كرة السلة</td></tr>
+<tr><td>baile</td><td>رقص</td></tr>
+<tr><td>béisbol</td><td>بيسبول</td></tr>
+<tr><td>billar</td><td>بلياردو</td></tr>
+<tr><td>boliche</td><td>بولينج</td></tr>
+<tr><td>boxeo</td><td>ملاكمة</td></tr>
+<tr><td>buceo</td><td>غوص</td></tr>
+<tr><td>ciclismo</td><td>ركوب الدراجات</td></tr>
+<tr><td>cricket</td><td>كريكيت</td></tr>
+<tr><td>deporte</td><td>رياضة</td></tr>
+<tr><td>equitación</td><td>فروسية</td></tr>
+<tr><td>fisiculturismo</td><td>كمال الأجسام</td></tr>
+<tr><td>fórmula 1</td><td>الفورمولا واحد</td></tr>
+<tr><td>fútbol</td><td>كرة القدم</td></tr>
+<tr><td>fútbol americano</td><td>كرة القدم الأمريكية</td></tr>
+<tr><td>fútbol sala</td><td>كرة القدم الصالات</td></tr>
+<tr><td>gimnasia</td><td>جمباز</td></tr>
+<tr><td>gimnasia acrobática</td><td>جمباز هوائي</td></tr>
+<tr><td>gimnasia rítmica</td><td>جمباز راقص</td></tr>
+<tr><td>golf</td><td>جولف</td></tr>
+<tr><td>halterofilia</td><td>رفع الأثقال</td></tr>
+<tr><td>hockey sobre hielo</td><td>هوكي الجليد</td></tr>
+<tr><td>tenis</td><td>تنس</td></tr>
+<tr><td>tenis de mesa</td><td>تنس الطاولة</td></tr>
+<tr><td>voleibol</td><td>كرة الطائرة</td></tr>
+<tr><td>surf</td><td>ركوب الأمواج</td></tr>
+<tr><td>remo</td><td>تجديف</td></tr>
+<tr><td>piragüismo</td><td>ركوب الكانو</td></tr>
+<tr><td>esgrima</td><td>مبارزة</td></tr>
+<tr><td>patinaje</td><td>تزلج</td></tr>
+<tr><td>patinaje sobre hielo</td><td>تزلج على الجليد</td></tr>
+<tr><td>escalada</td><td>تسلق</td></tr>
+<tr><td>motociclismo</td><td>سباق الدراجات النارية</td></tr>
+<tr><td>esquí</td><td>تزلج</td></tr>
+<tr><td>snowboard</td><td>تزلج على الجليد</td></tr>
+<tr><td>paracaidismo</td><td>قفز بالمظلة</td></tr>
+<tr><td>triatlón</td><td>ثلاثي الأشواط</td></tr>
+<tr><td>bádminton</td><td>تنس الريشة</td></tr>
+<tr><td>karate</td><td>كاراتيه</td></tr>
+<tr><td>judo</td><td>جودو</td></tr>
+
+<tr><th colspan="2">Medicine (طب)</th></tr>
+<tr><td>ginecología</td><td>علم النساء والتوليد</td></tr>
+<tr><td>alzheimer</td><td>مرض الزهايمر</td></tr>
+<tr><td>dermatología</td><td>علم الجلدية</td></tr>
+<tr><td>diabetes</td><td>السكري</td></tr>
+<tr><td>anatomía</td><td>علم التشريح</td></tr>
+<tr><td>anestesia</td><td>التخدير</td></tr>
+<tr><td>artritis</td><td>التهاب المفاصل</td></tr>
+<tr><td>fisioterapia</td><td>علاج طبيعي</td></tr>
+<tr><td>cáncer</td><td>السرطان</td></tr>
+<tr><td>diagnóstico</td><td>التشخيص</td></tr>
+<tr><td>doctor</td><td>الطبيب</td></tr>
+<tr><td>enfermedad</td><td>المرض</td></tr>
+<tr><td>enfermera</td><td>الممرضة</td></tr>
+<tr><td>cirugía</td><td>الجراحة</td></tr>
+<tr><td>consulta</td><td>الاستشارة</td></tr>
+<tr><td>hemorragia</td><td>النزف</td></tr>
+<tr><td>hipertensión</td><td>ارتفاع ضغط الدم</td></tr>
+<tr><td>estetoscopio</td><td>سماعة الطبيب</td></tr>
+<tr><td>farmacia</td><td>الصيدلية</td></tr>
+<tr><td>hospital</td><td>المستشفى</td></tr>
+<tr><td>insomnio</td><td>الأرق</td></tr>
+<tr><td>inmunología</td><td>علم المناعة</td></tr>
+<tr><td>psicología</td><td>علم النفس</td></tr>
+<tr><td>neurología</td><td>علم الأعصاب</td></tr>
+<tr><td>oftalmología</td><td>علم العيون</td></tr>
+<tr><td>radiología</td><td>علم الأشعة</td></tr>
+<tr><td>pediatría</td><td>طب الأطفال</td></tr>
+<tr><td>cardiología</td><td>علم القلب</td></tr>
+<tr><td>urología</td><td>طب الكلى والمسالك البولية</td></tr>
+<tr><td>psiquiatría</td><td>علم الطب النفسي</td></tr>
+<tr><td>reumatología</td><td>علم الروماتيزم</td></tr>
+<tr><td>endocrinología</td><td>علم الغدد الصماء</td></tr>
+<tr><td>dermatología</td><td>علم الجلدية</td></tr>
+<tr><td>gastroenterología</td><td>علم الجهاز الهضمي</td></tr>
+<tr><td>neumología</td><td>علم أمراض الجهاز التنفسي</td></tr>
+<tr><td>hematología</td><td>علم الدم</td></tr>
+<tr><td>oncología</td><td>علم الأورام</td></tr>
+<tr><td>nefrología</td><td>علم الكلى</td></tr>
+<tr><td>neurocirugía</td><td>جراحة الأعصاب</td></tr>
+<tr><td>oftalmología</td><td>علم العيون</td></tr>
+<tr><td>otorrinolaringología</td><td>علم أمراض الأذن والأنف والحنجرة</td></tr>
+<tr><td>patología</td><td>علم الأمراض</td></tr>
+<tr><td>psicoterapia</td><td>علاج نفسي</td></tr>
+<tr><td>radioterapia</td><td>علاج بالإشعاع</td></tr>
+<tr><td>genética</td><td>علم الوراثة</td></tr>
+<tr><td>microbiología</td><td>علم الأحياء الدقيقة</td></tr>
+<tr><td>epidemiología</td><td>علم الوبائيات</td></tr>
+<tr><td>anestesiología</td><td>علم التخدير</td></tr>
+<tr><td>nutrición</td><td>علم التغذية</td></tr>
+<tr><td>radiografía</td><td>التصوير الشعاعي</td></tr>
+<tr><td>cirugía plástica</td><td>جراحة التجميل</td></tr>
+<tr><td>urología</td><td>طب الكلى والمسالك البولية</td></tr>
+<tr><td>neurología</td><td>علم الأعصاب</td></tr>
+<tr><td>ortopedia</td><td>علم العظام والمفاصل</td></tr>
+<tr><td>cardiología pediátrica</td><td>طب القلب للأطفال</td></tr>
+<tr><td>neonatología</td><td>علم الأطفال الحديثي الولادة</td></tr>
+<tr><td>geriatría</td><td>علم الشيخوخة</td></tr>
+<tr><td>obstetricia</td><td>علم الولادة والتوليد</td></tr>
+<tr><td>neurocirugía</td><td>جراحة الأعصاب</td></tr>
+<tr><td>psicofarmacología</td><td>علم الأدوية النفسية</td></tr>
+<tr><td>cirugía cardíaca</td><td>جراحة القلب</td></tr>
+<tr><td>hematología</td><td>علم الدم</td></tr>
+<tr><td>nefrología</td><td>علم الكلى</td></tr>
+<tr><td>pediatría</td><td>طب الأطفال</td></tr>
+<tr><td>endocrinología</td><td>علم الغدد الصماء</td></tr>
+<tr><td>dermatología</td><td>علم الجلدية</td></tr>
+<tr><td>gastroenterología</td><td>علم الجهاز الهضمي</td></tr>
+<tr><td>neumología</td><td>علم أمراض الجهاز التنفسي</td></tr>
+<tr><th colspan="2">Politics (سياسة)</th></tr>
+<tr><td>Política</td><td>سياسة</td></tr>
+<tr><td>Gobierno</td><td>حكومة</td></tr>
+<tr><td>Democracia</td><td>ديمقراطية</td></tr>
+<tr><td>Elecciones</td><td>انتخابات</td></tr>
+<tr><td>Partido político</td><td>حزب سياسي</td></tr>
+<tr><td>Presidente</td><td>رئيس</td></tr>
+<tr><td>Legislación</td><td>تشريع</td></tr>
+<tr><td>Parlamento</td><td>برلمان</td></tr>
+<tr><td>Constitución</td><td>دستور</td></tr>
+<tr><td>Poder</td><td>سلطة</td></tr>
+<tr><td>Derechos humanos</td><td>حقوق الإنسان</td></tr>
+<tr><td>Corrupción</td><td>فساد</td></tr>
+<tr><td>Ideología</td><td>أيديولوجية</td></tr>
+<tr><td>Diplomacia</td><td>دبلوماسية</td></tr>
+<tr><td>Justicia</td><td>عدالة</td></tr>
+<tr><td>Políticas públicas</td><td>سياسات عامة</td></tr>
+<tr><td>Oposición</td><td>معارضة</td></tr>
+<tr><td>Gobierno local</td><td>حكومة محلية</td></tr>
+<tr><td>Campaña electoral</td><td>حملة انتخابية</td></tr>
+<tr><td>Senado</td><td>مجلس الشيوخ</td></tr>
+<tr><td>Comité</td><td>لجنة</td></tr>
+<tr><td>Coalición</td><td>تحالف</td></tr>
+<tr><td>Discurso</td><td>خطاب</td></tr>
+<tr><td>Acuerdo</td><td>اتفاق</td></tr>
+<tr><td>Liderazgo</td><td>قيادة</td></tr>
+<tr><td>Política exterior</td><td>سياسة خارجية</td></tr>
+<tr><td>Medios de comunicación</td><td>وسائل الإعلام</td></tr>
+<tr><td>Opinión pública</td><td>الرأي العام</td></tr>
+<tr><td>Burocracia</td><td>بيروقراطية</td></tr>
+<tr><td>Revolución</td><td>ثورة</td></tr>
+<tr><td>Nacionalismo</td><td>قومية</td></tr>
+<tr><td>Globalización</td><td>العولمة</td></tr>
+<tr><td>Referéndum</td><td>استفتاء</td></tr>
+<tr><td>Lobby</td><td>دعاية وضغط</td></tr>
+<tr><td>Medio ambiente</td><td>البيئة</td></tr>
+<tr><td>Derecho internacional</td><td>القانون الدولي</td></tr>
+<tr><td>Política económica</td><td>سياسة اقتصادية</td></tr>
+
+<tr><th colspan="2">Economy (اقتصاد)</th></tr>
+<tr><td>Economía</td><td>اقتصاد</td></tr>
+<tr><td>Mercado</td><td>سوق</td></tr>
+<tr><td>Comercio</td><td>تجارة</td></tr>
+<tr><td>Empresa</td><td>شركة</td></tr>
+<tr><td>Producto</td><td>منتج</td></tr>
+<tr><td>Consumidor</td><td>مستهلك</td></tr>
+<tr><td>Inversión</td><td>استثمار</td></tr>
+<tr><td>Empleo</td><td>وظيفة</td></tr>
+<tr><td>Industria</td><td>صناعة</td></tr>
+<tr><td>Producción</td><td>إنتاج</td></tr>
+<tr><td>Precio</td><td>سعر</td></tr>
+<tr><td>Beneficio</td><td>ربح</td></tr>
+<tr><td>Impuesto</td><td>ضريبة</td></tr>
+<tr><td>Salario</td><td>راتب</td></tr>
+<tr><td>Recursos</td><td>موارد</td></tr>
+<tr><td>Deuda</td><td>دين</td></tr>
+<tr><td>Finanzas</td><td>تمويل</td></tr>
+<tr><td>Moneda</td><td>عملة</td></tr>
+<tr><td>Banco</td><td>بنك</td></tr>
+<tr><td>Crédito</td><td>ائتمان</td></tr>
+<tr><td>Interés</td><td>فائدة</td></tr>
+<tr><td>Exportación</td><td>تصدير</td></tr>
+<tr><td>Importación</td><td>استيراد</td></tr>
+<tr><td>Desarrollo</td><td>تطوير</td></tr>
+<tr><td>Estabilidad</td><td>استقرار</td></tr>
+<tr><td>Estímulo</td><td>تحفيز</td></tr>
+<tr><td>Riesgo</td><td>مخاطرة</td></tr>
+<tr><td>Competencia</td><td>منافسة</td></tr>
+<tr><td>Regulación</td><td>تنظيم</td></tr>
+<tr><td>Depresión económica</td><td>كساد اقتصادي</td></tr>
+<tr><td>Recesión</td><td>ركود</td></tr>
+<tr><td>Inflación</td><td>تضخم</td></tr>
+<tr><td>Desempleo</td><td>بطالة</td></tr>
+<tr><td>Estímulo económico</td><td>تحفيز اقتصادي</td></tr>
+
+<tr><th colspan="2">Palestine (فلسطين)</th></tr>
+<tr><td>Palestina</td><td>فلسطين</td></tr>
+<tr><td>Jerusalén</td><td>القدس</td></tr>
+<tr><td>Gaza</td><td>غزة</td></tr>
+<tr><td>Cisjordania</td><td>الضفة الغربية</td></tr>
+<tr><td>Refugiado</td><td>لاجئ</td></tr>
+<tr><td>Conflicto</td><td>نزاع</td></tr>
+<tr><td>Israel</td><td>إسرائيل</td></tr>
+<tr><td>Intifada</td><td>انتفاضة</td></tr>
+<tr><td>Acuerdo de paz</td><td>اتفاقية سلام</td></tr>
+<tr><td>Frontera</td><td>حدود</td></tr>
+<tr><td>Asentamiento</td><td>مستوطنة</td></tr>
+<tr><td>Lucha</td><td>نضال</td></tr>
+<tr><td>Jerusalén Este</td><td>القدس الشرقية</td></tr>
+<tr><td>Organización para la Liberación de Palestina (OLP)</td><td>منظمة التحرير الفلسطينية (منظمة التحرير)</td></tr>
+<tr><td>Hamás</td><td>حماس</td></tr>
+<tr><td>Yihad Islámica</td><td>الجهاد الإسلامي</td></tr>
+<tr><td>Línea Verde</td><td>الخط الأخضر</td></tr>
+<tr><td>Al-Fatah</td><td>الفتح</td></tr>
+<tr><td>Al-Quds</td><td>القدس</td></tr>
+<tr><td>Colonización</td><td>استعمار</td></tr>
+<tr><td>Reconstrucción</td><td>إعمار</td></tr>
+<tr><td>Derecho al retorno</td><td>الحق في العودة</td></tr>
+<tr><td>Boicot</td><td>مقاطعة</td></tr>
+<tr><td>Barrera de separación</td><td>جدار الفصل العنصري</td></tr>
+<tr><td>Al-Aqsa</td><td>المسجد الأقصى</td></tr>
+<tr><td>Resistencia</td><td>مقاومة</td></tr>
+<tr><td>Asedio</td><td>حصار</td></tr>
+<tr><td>Palestino</td><td>فلسطيني</td></tr>
+<tr><td>Refugiados palestinos</td><td>اللاجئين الفلسطينيين</td></tr>
+<tr><td>Naciones Unidas</td><td>الأمم المتحدة</td></tr>
+<tr><td>Resolución</td><td>قرار</td></tr>
+<tr><td>ONU</td><td>الأمم المتحدة</td></tr>
+<tr><td>Jerusalén Oeste</td><td>القدس الغربية</td></tr>
+<tr><td>Embajada</td><td>سفارة</td></tr>
+<tr><td>Estado palestino</td><td>الدولة الفلسطينية</td></tr>
+<tr><td>Protesta</td><td>احتجاج</td></tr>
+<tr><td>Solución de dos Estados</td><td>حل الدولتين</td></tr>
+<tr><td>Derechos humanos</td><td>حقوق الإنسان</td></tr>
+<tr><td>Mediador</td><td>وسيط</td></tr>
+<tr><td>Mediación</td><td>وساطة</td></tr>
+<tr><td>Resistencia pacífica</td><td>المقاومة السلمية</td></tr>
+<tr><td>Autonomía</td><td>الحكم الذاتي</td></tr>
+<tr><td>Corte Internacional de Justicia</td><td>المحكمة الدولية</td></tr>
+
+    </tbody>
+           
+        </table>
+        </div>
+    </div>
+
+    <script>
+    function filterDictionary() {
+        // Get input element and filter value
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toUpperCase();
+        
+        // Get table rows
+        var table = document.getElementById('wordList');
+        var rows = table.getElementsByTagName('tr');
+        
+        // Loop through all table rows, hide those that don't match the search input
+        for (var i = 0; i < rows.length; i++) {
+            var tdWord = rows[i].getElementsByTagName('td')[0]; // First column (Word)
+            var tdTranslation = rows[i].getElementsByTagName('td')[1]; // Second column (Translation)
+            
+            // If match found in either word or translation, display; otherwise, hide
+            if (tdWord || tdTranslation) {
+                var wordText = tdWord.textContent || tdWord.innerText;
+                var translationText = tdTranslation.textContent || tdTranslation.innerText;
+                if (wordText.toUpperCase().indexOf(filter) > -1 || translationText.toUpperCase().indexOf(filter) > -1) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }       
+        }
+    }
+</script>
+</body>
+</html>
